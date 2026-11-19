@@ -1,6 +1,6 @@
 """Sound + final video for "Still On". Run with python (needs ffmpeg).
 
-  assemble.py audio            # events.json -> synthesized SFX -> final/full_audio.wav (one fixed gain, voice never dips)
+  assemble.py audio            # events.json -> synthesized SFX (+ final/score.wav if present) -> final/full_audio.wav
   assemble.py video [preview]  # part1..3 frames (or preview frames) + full_audio -> full_video.mp4 (or preview.mp4)
 """
 import json, subprocess, sys
@@ -78,6 +78,13 @@ def cues():
 def audio():
     end = END_F / FPS
     raw = F.mix_audio(HERE, cues(), True, end, FIN / "mix_raw.wav")
+    if (FIN / "score.wav").exists():  # score.py's music: -9 dB, ducked under the voice, before the one fixed gain
+        F.run([F.FF, "-y", "-i", raw, "-i", FIN / "score.wav", "-i", FIN / "narration.mp3", "-filter_complex",
+               "[1:a]aresample=48000,volume=-9dB[m];[2:a]aresample=48000,pan=stereo|c0=c0|c1=c0[k];"
+               "[m][k]sidechaincompress=threshold=0.02:ratio=4:attack=40:release=600[md];"
+               "[0:a][md]amix=inputs=2:normalize=0:duration=first[a]", "-map", "[a]", "-ar", "48000",
+               "-c:a", "pcm_s16le", FIN / "mix_music.wav"])
+        raw = FIN / "mix_music.wav"
     i, tp = F.loudness(raw)
     gain = min(F.TARGET_I - i, F.TARGET_TP - tp)
     F.run([F.FF, "-y", "-i", raw, "-af", f"volume={gain:.2f}dB", "-ar", str(SR), "-c:a", "pcm_s16le", FIN / "full_audio.wav"])

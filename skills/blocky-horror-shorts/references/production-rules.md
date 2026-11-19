@@ -8,6 +8,11 @@
 - Audio is mixed centrally with one fixed gain to about -14 LUFS. Effects and the drone duck under the voice; nothing
   dynamic touches the voice itself (a normaliser on the whole mix made the voice pump).
 
+## Music
+- Original only: `score.py` synthesizes it (no samples, no loops, nothing to copyright-claim).
+- It sits about 9 dB down and is side-chain ducked under the voice; one fixed gain on the whole mix afterwards.
+- Silence is the scariest sound: cut the music on the scare event and before knocks, then hit on the reveal line.
+
 ## Camera
 - Only `S.shot(...)` / `S.continue_shot(...)`: one smooth eased move per shot, capped speed, turn and zoom
   (`MAX_SPEED`, `MAX_TURN`, `MAX_ZOOM` in shared.py). No sudden speed changes, no flips.

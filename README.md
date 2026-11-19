@@ -27,6 +27,9 @@ No paid APIs: a local voice clone (Chatterbox), local Whisper timing, CC0 assets
 - **Multi-agent production:** three Claude sub-agents build the three parts of the video in parallel against one
   shared base, so the parts match.
 - **Automatic QA:** contact sheets, plus checks for black, frozen and popping frames and loudness (-14 LUFS for YouTube).
+- **Original background music, generated in code:** a music-box horror score that follows the story beats, goes
+  silent before the scares and hits on the twist. No copyright claims. Listen to the example:
+  [`still_on_score.mp3`](skills/blocky-horror-shorts/example/still-on/still_on_score.mp3).
 - **Voice cloning from your own sample** (Chatterbox). No voice audio is shipped.
 - **No captions by default.** They can be added lower-third.
 
@@ -40,7 +43,7 @@ script.txt ──► voice.py ──► timeline.py ──► shots.json + event
      part1/scene.py           part2/scene.py           part3/scene.py    (3 sub-agents in parallel)
           └──────── Blender frames ┼────────────────────────┘
                                    │
-                assemble.py: synthesized SFX on event frames + voice + drone ──► full_video.mp4
+    score.py (original music) + assemble.py: synthesized SFX on event frames + voice ──► full_video.mp4
 ```
 
 ## Install
@@ -72,6 +75,9 @@ renders end to end.
 ## FAQ
 **Can I use the videos on a monetized channel?** Yes. The stories are original, the assets are CC0 and the sound
 effects are synthesized. The voice must be yours or licensed to you.
+
+**Where does the music come from?** `score.py` synthesizes it from sine waves and noise with numpy. It is your own
+original music, safe for Content ID, and it is timed to the story's events.
 
 **Does it need a GPU or paid AI credits?** No paid credits. Any machine that runs Blender's EEVEE works. Apple Silicon,
 NVIDIA and CPU all work, just at different speeds.

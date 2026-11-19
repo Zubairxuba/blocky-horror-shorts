@@ -15,7 +15,8 @@ Skill files (use these exact paths):
   (camera-motion QA), `short_qa.py` (rendered-video QA), `assets.py` (downloads CC0 Poly Haven assets), `gen/` (face decals).
 - Pipeline (audio + timing): `${CLAUDE_SKILL_DIR}/pipeline/voice.py`, `${CLAUDE_SKILL_DIR}/pipeline/finish.py`.
 - Worked example, a complete 1:56 story "Still On": `${CLAUDE_SKILL_DIR}/example/still-on/` (script, `timeline.py`,
-  `shared.py`, `assemble.py`, `part1-3/scene.py`). **Copy and adapt it; never import from it.**
+  `shared.py`, `score.py`, `assemble.py`, `part1-3/scene.py`; `still_on_score.mp3` = what the score sounds like).
+  **Copy and adapt it; never import from it.**
 - Rules you must follow: [references/story-formula.md](references/story-formula.md),
   [references/production-rules.md](references/production-rules.md), [references/brief-template.md](references/brief-template.md).
 
@@ -50,6 +51,14 @@ Edit the copied `timeline.py`: `EXTRA` (silence after lines for on-screen beats:
 `events()`: every synced beat as `(id, time, sound, gain)` with times taken ONLY from words (`w(line, "word")`) or line
 ends. Run `python timeline.py` -> `shots.json`, `events.json`, `words_full.json`, `final/narration.mp3`.
 Check the printed "voice check: N/M words heard"; if low, listen and fix the line.
+
+## 3b. Original music
+Never use other people's music. Copy `score.py` and rewrite its sections for this story's beats, keeping the
+instruments and the music-box motif (the channel's sound signature): soft lullaby under the setup, rising pulse in the
+countdown, the music DIES on the scare event and goes silent before knocks, low piano hits on the big lines, the motif
+returns slow and sad at the twist, and the ending answers the motif into the hard cut. Every time comes from
+`events.json` / `shots.json`. Run it with numpy + soundfile -> `final/score.wav` + `final/score.mp3`; `assemble.py audio`
+mixes it under the voice automatically. Check it with a per-second loudness printout against the beats (you cannot hear it).
 
 ## 4. Shared base (lead only)  -> STOP 2
 Rewrite `shared.py` for THIS story (keep its API shape: `Part`, `reset`, `render`, `char`, `visible`, `shot`,

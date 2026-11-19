@@ -1,0 +1,5 @@
+# Python side (voice + audio). Blender ships its own Python for the scene scripts.
+chatterbox-tts
+soundfile
+numpy
+Pillow

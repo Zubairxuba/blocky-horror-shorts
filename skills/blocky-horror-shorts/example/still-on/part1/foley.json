@@ -1,0 +1,72 @@
+[
+ {
+  "frame": 130,
+  "sound": "step",
+  "gain": 0.2
+ },
+ {
+  "frame": 142,
+  "sound": "step",
+  "gain": 0.2
+ },
+ {
+  "frame": 154,
+  "sound": "step",
+  "gain": 0.2
+ },
+ {
+  "frame": 166,
+  "sound": "step",
+  "gain": 0.2
+ },
+ {
+  "frame": 177,
+  "sound": "step",
+  "gain": 0.2
+ },
+ {
+  "frame": 1139,
+  "sound": "step",
+  "gain": 0.25
+ },
+ {
+  "frame": 1149,
+  "sound": "step",
+  "gain": 0.25
+ },
+ {
+  "frame": 1159,
+  "sound": "step",
+  "gain": 0.25
+ },
+ {
+  "frame": 1169,
+  "sound": "step",
+  "gain": 0.25
+ },
+ {
+  "frame": 1179,
+  "sound": "step",
+  "gain": 0.25
+ },
+ {
+  "frame": 1189,
+  "sound": "step",
+  "gain": 0.25
+ },
+ {
+  "frame": 1199,
+  "sound": "step",
+  "gain": 0.25
+ },
+ {
+  "frame": 1209,
+  "sound": "step",
+  "gain": 0.25
+ },
+ {
+  "frame": 1219,
+  "sound": "step",
+  "gain": 0.25
+ }
+]

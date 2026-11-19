@@ -1,0 +1,248 @@
+[
+ {
+  "id": "intro_drop",
+  "frame": 1,
+  "sound": "drop",
+  "gain": 0.3
+ },
+ {
+  "id": "rule_knock",
+  "frame": 172,
+  "sound": "knock1",
+  "gain": 0.5
+ },
+ {
+  "id": "nar_flash1",
+  "frame": 608,
+  "sound": "click",
+  "gain": 0.5
+ },
+ {
+  "id": "nar_flash2",
+  "frame": 618,
+  "sound": "click",
+  "gain": 0.5
+ },
+ {
+  "id": "theo_flash1",
+  "frame": 691,
+  "sound": "click",
+  "gain": 0.45
+ },
+ {
+  "id": "theo_flash2",
+  "frame": 701,
+  "sound": "click",
+  "gain": 0.45
+ },
+ {
+  "id": "gust1",
+  "frame": 1323,
+  "sound": "gust",
+  "gain": 0.6
+ },
+ {
+  "id": "power_out_16",
+  "frame": 1390,
+  "sound": "zap",
+  "gain": 0.35
+ },
+ {
+  "id": "gust2",
+  "frame": 1414,
+  "sound": "gust",
+  "gain": 0.5
+ },
+ {
+  "id": "hale_dark",
+  "frame": 1577,
+  "sound": "zap",
+  "gain": 0.35
+ },
+ {
+  "id": "hale_knock1",
+  "frame": 1661,
+  "sound": "knock1",
+  "gain": 0.2
+ },
+ {
+  "id": "hale_knock2",
+  "frame": 1678,
+  "sound": "knock1",
+  "gain": 0.2
+ },
+ {
+  "id": "hale_knock3",
+  "frame": 1694,
+  "sound": "knock1",
+  "gain": 0.2
+ },
+ {
+  "id": "hale_door",
+  "frame": 1723,
+  "sound": "creak",
+  "gain": 0.5
+ },
+ {
+  "id": "thunder",
+  "frame": 1981,
+  "sound": "thunder",
+  "gain": 0.4
+ },
+ {
+  "id": "rain_on",
+  "frame": 1981,
+  "sound": null,
+  "gain": 0
+ },
+ {
+  "id": "all_out",
+  "frame": 2031,
+  "sound": "zap",
+  "gain": 0.4
+ },
+ {
+  "id": "boom_out",
+  "frame": 2031,
+  "sound": "boom",
+  "gain": 0.25
+ },
+ {
+  "id": "step1",
+  "frame": 2223,
+  "sound": "step",
+  "gain": 0.6
+ },
+ {
+  "id": "heart_on",
+  "frame": 2223,
+  "sound": null,
+  "gain": 0
+ },
+ {
+  "id": "step2",
+  "frame": 2231,
+  "sound": "step",
+  "gain": 0.6
+ },
+ {
+  "id": "step3",
+  "frame": 2242,
+  "sound": "step",
+  "gain": 0.6
+ },
+ {
+  "id": "thing_knock1",
+  "frame": 2314,
+  "sound": "knock1",
+  "gain": 0.22
+ },
+ {
+  "id": "thing_knock2",
+  "frame": 2330,
+  "sound": "knock1",
+  "gain": 0.22
+ },
+ {
+  "id": "thing_knock3",
+  "frame": 2347,
+  "sound": "knock1",
+  "gain": 0.22
+ },
+ {
+  "id": "dont",
+  "frame": 2426,
+  "sound": "stinger",
+  "gain": 0.12
+ },
+ {
+  "id": "heart_off",
+  "frame": 2426,
+  "sound": null,
+  "gain": 0
+ },
+ {
+  "id": "riser",
+  "frame": 2491,
+  "sound": "riser",
+  "gain": 0.35
+ },
+ {
+  "id": "revwhoosh",
+  "frame": 2540,
+  "sound": "revwhoosh",
+  "gain": 0.25
+ },
+ {
+  "id": "boom_ago",
+  "frame": 2551,
+  "sound": "boom",
+  "gain": 0.28
+ },
+ {
+  "id": "remember",
+  "frame": 2575,
+  "sound": "whoosh",
+  "gain": 0.3
+ },
+ {
+  "id": "sunrise",
+  "frame": 2849,
+  "sound": null,
+  "gain": 0
+ },
+ {
+  "id": "rain_off",
+  "frame": 2900,
+  "sound": null,
+  "gain": 0
+ },
+ {
+  "id": "truck",
+  "frame": 2953,
+  "sound": "truck",
+  "gain": 0.35
+ },
+ {
+  "id": "nar_flash3",
+  "frame": 3147,
+  "sound": "click",
+  "gain": 0.5
+ },
+ {
+  "id": "nar_flash4",
+  "frame": 3158,
+  "sound": "click",
+  "gain": 0.5
+ },
+ {
+  "id": "porch_flicker",
+  "frame": 3252,
+  "sound": "buzz",
+  "gain": 0.4
+ },
+ {
+  "id": "swell",
+  "frame": 3252,
+  "sound": "swell",
+  "gain": 0.35
+ },
+ {
+  "id": "mom_flash1",
+  "frame": 3445,
+  "sound": "click",
+  "gain": 0.5
+ },
+ {
+  "id": "end_swell",
+  "frame": 3446,
+  "sound": "endswell",
+  "gain": 0.3
+ },
+ {
+  "id": "mom_flash2",
+  "frame": 3456,
+  "sound": "click",
+  "gain": 0.5
+ }
+]

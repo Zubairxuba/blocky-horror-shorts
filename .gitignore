@@ -1,0 +1,21 @@
+# downloaded / generated, never committed
+skills/blocky-horror-shorts/engine/assets/
+skills/blocky-horror-shorts/pipeline/models/
+skills/blocky-horror-shorts/pipeline/sfx/
+__pycache__/
+.DS_Store
+.env
+*.env
+# story outputs
+**/lines/
+**/frames/
+**/preview/
+**/test/
+**/seq/
+**/seq_preview/
+**/qa/
+*.mp3
+*.wav
+*.mp4
+*.npz
+*.log

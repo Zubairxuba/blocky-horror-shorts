@@ -1,6 +1,6 @@
 {
   "name": "blocky-horror-shorts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Story idea -> finished vertical 3D blocky horror Short, built in code with Blender: script, cloned narration, one synced timeline for picture and sound, parallel part agents, synthesized SFX.",
   "license": "MIT",
   "keywords": [
@@ -12,7 +12,9 @@
     "text-to-video",
     "faceless-channel",
     "tiktok",
-    "voice-cloning", "horror-music", "royalty-free-music",
+    "voice-cloning",
+    "horror-music",
+    "royalty-free-music",
     "claude-code-skill"
   ],
   "author": {

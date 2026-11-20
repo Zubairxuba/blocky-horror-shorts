@@ -8,7 +8,10 @@ from pathlib import Path
 
 OUT = Path(__file__).parent / "assets"
 UA = {"User-Agent": "studio-asset-fetch"}
-HDRIS = {"cobblestone_street_night": "2k"}
+HDRIS = {"cobblestone_street_night": "2k",
+         # real photographed skies (look.sky): sunny + soft clouds, overcast, sunset, night
+         "kloofendal_48d_partly_cloudy_puresky": "4k", "kloofendal_overcast_puresky": "4k",
+         "belfast_sunset_puresky": "4k", "satara_night_no_lamps": "4k", "moonlit_golf": "4k"}
 TEXTURES = {  # name: resolution (2k where the camera gets close)
     "red_brick": "2k", "asphalt_01": "2k", "concrete_floor_worn_001": "1k", "laminate_floor_02": "2k",
     "beige_wall_001": "1k", "clay_roof_tiles": "1k", "denim_fabric": "1k", "wood_table_001": "1k",
@@ -17,6 +20,8 @@ MODELS = {  # gltf at 1k textures
     "street_lamp_01": "1k", "metal_trash_can": "1k", "fire_hydrant": "1k", "modular_chainlink_fence": "1k",
     "dining_table": "1k", "dining_chair_02": "1k", "modern_wooden_cabinet": "1k", "fancy_picture_frame_01": "1k",
     "planter_box_01": "1k", "fir_tree_01": "1k",
+    # real vegetation (look.tree decimates the heavy ones on load)
+    "tree_small_02": "1k", "island_tree_01": "1k", "shrub_01": "1k", "dead_tree_trunk": "1k",
 }
 MAPS = ("Diffuse", "nor_gl", "Rough")  # colour, OpenGL normal, roughness
 

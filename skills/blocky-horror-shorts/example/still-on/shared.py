@@ -33,6 +33,7 @@ SKILL = Path(__file__).resolve().parents[2]  # the skill folder; in a copied sto
 BLENDER = SKILL / "engine"
 sys.path.insert(0, str(BLENDER))
 import characters as C  # noqa: E402
+import look  # noqa: E402  (depth of field, haze, rim light, post-grade)
 import sets  # noqa: E402
 from common import GEN, box, color, decal, empty, light, pbr, plane  # noqa: E402
 
@@ -115,6 +116,11 @@ def reset(samples=32):
     return s
 
 
+def atmosphere(density=0.0015):
+    """Thin haze in the air (call once after the world/sets exist): lamp halos, light cones, depth."""
+    look.haze(density)
+
+
 def render(s, part, args):
     """--frames 10,50 -> partN/test/; --preview -> 30% size, 8 samples -> partN/preview/; else partN/frames/."""
     d = HERE / f"part{part.n}"
@@ -151,6 +157,7 @@ def hinged(o, pivot):
 def char(name, kind, loc, rot_z=0.0, face=None):
     """C.make + show ONLY one face (default: the look's first face). Use this, not C.make, for every character."""
     j = C.make(name, kind, loc, rot_z)
+    look.rim([j["root"], *j["root"].children_recursive])  # soft light edge so characters pop off dark backgrounds
     base = face or next(iter(j["faces"]))
     for f, o in j["faces"].items():
         o.hide_render = f != base
@@ -683,6 +690,7 @@ def shot(s, name, a, b, loc, target, lens=30, move=(0, 0, 0), push=0.08, orbit=0
             for fc in C.fcurves(o):
                 kps = fc.keyframe_points
                 kps[0].interpolation = kps[-2].interpolation = "BEZIER"
+    look.dof(cam, tgt, fstop=2.0 if lens >= 45 else (2.8 if lens >= 30 else 4.5))  # focus on the shot's target
     s.timeline_markers.new(name, frame=a).camera = cam
     cam["shot"] = (a, b)
     return cam
@@ -709,6 +717,8 @@ def continue_shot(s, prev, name, a, b):
     C.key(cd, "lens", b, l1 + dl * n)
     C.linear(cam)
     C.linear(cd)
+    if prev.data.dof.use_dof:  # same blur and focus as the shot it continues
+        look.dof(cam, prev.data.dof.focus_object, prev.data.dof.aperture_fstop)
     s.timeline_markers.new(name, frame=a).camera = cam
     cam["shot"] = (a, b)
     s.frame_set(1)
@@ -739,7 +749,7 @@ def check_cameras(s, min_front=0.6, min_any=0.2):
     print(f"check_cameras: {len([m for m in s.timeline_markers if m.camera])} cameras OK", flush=True)
 
 
-def clear_flakes_near_cameras(s, r=1.5):
+def clear_flakes_near_cameras(s, r=2.5):
     """Hide weather particles that pass within r m (ground plan) of a shot camera's path (giant blocks at the lens)."""
     flakes = [o for o in bpy.data.objects if o.type == "MESH" and o.data.name.startswith("flake_")]
     starts = sorted(m.frame for m in s.timeline_markers if m.camera)
@@ -748,12 +758,24 @@ def clear_flakes_near_cameras(s, r=1.5):
         if not m.camera:
             continue
         end = min([f for f in starts if f > m.frame] + [s.frame_end + 1]) - 1
+        rr = max(r, 0.055 * m.camera.data.lens)  # zoomed lenses magnify flakes: ~4 m clear at 75 mm
         for fr in (m.frame, (m.frame + end) // 2, end):
             s.frame_set(fr)
             c = m.camera.matrix_world.translation.xy
             for o in flakes:
-                if (o.matrix_world.translation.xy - c).length < r:
+                if (o.matrix_world.translation.xy - c).length < rr:
                     hid.add(o)
+    # no snow under porch roofs or inside houses (it read as snow falling indoors)
+    roofs = []
+    for ob in bpy.data.objects:
+        if ob.type == "MESH" and ob.name.endswith(("_porchroof", "_house", "_body", "_body2", "_room_floor")):
+            xs = [(ob.matrix_world @ v.co).x for v in ob.data.vertices]
+            ys = [(ob.matrix_world @ v.co).y for v in ob.data.vertices]
+            roofs.append((min(xs) - 0.1, max(xs) + 0.1, min(ys) - 0.1, max(ys) + 0.1))
+    for o in flakes:
+        x, y = o.matrix_world.translation.x, o.matrix_world.translation.y
+        if any(a <= x <= b and c <= y <= d for a, b, c, d in roofs):
+            hid.add(o)
     for o in hid:
         o.hide_render = True
     s.frame_set(1)

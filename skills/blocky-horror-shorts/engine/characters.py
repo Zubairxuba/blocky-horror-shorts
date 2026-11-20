@@ -43,19 +43,19 @@ LOOKS = {
     # porch-light short (Still On)
     "nar": dict(head=0.5, torso=(0.62, 0.32, 0.62), arm=(0.28, 0.62), leg=(0.3, 0.62), scale=0.72,
                 shirt=(0.3, 0.38, 0.55), pants=(0.12, 0.14, 0.2), shoes=(0.85, 0.85, 0.82), hair=(0.12, 0.08, 0.05),
-                skin=SKIN, face="kid", faces=("kid", "kid_blink", "kid_sad", "kid_sad_blink", "kid_scared", "kid_scared_blink", "kid_talk"), hood=True),
+                skin=SKIN, face="kid", faces=("kid", "kid_blink", "kid_sad", "kid_sad_blink", "kid_scared", "kid_scared_blink", "kid_talk"), hood=True, detail=True),
     "theo": dict(head=0.5, torso=(0.62, 0.32, 0.62), arm=(0.28, 0.62), leg=(0.3, 0.62), scale=0.74,
                  shirt=(0.95, 0.72, 0.1), pants=(0.15, 0.2, 0.35), shoes=(0.3, 0.12, 0.08), hair=(0.55, 0.25, 0.08),
-                 skin=SKIN, face="kid", faces=("kid", "kid_blink", "kid_sad", "kid_sad_blink", "kid_scared", "kid_scared_blink", "kid_talk", "kid_sad_smile", "kid_sad_smile_blink", "kid_shout"), hood=True),
+                 skin=SKIN, face="kid", faces=("kid", "kid_blink", "kid_sad", "kid_sad_blink", "kid_scared", "kid_scared_blink", "kid_talk", "kid_sad_smile", "kid_sad_smile_blink", "kid_shout"), hood=True, detail=True),
     "mom_l": dict(head=0.5, torso=(0.62, 0.32, 0.7), arm=(0.27, 0.68), leg=(0.29, 0.72), scale=0.9,
                   shirt=(0.48, 0.36, 0.44), pants=(0.22, 0.2, 0.22), shoes=(0.18, 0.12, 0.08), hair=(0.12, 0.07, 0.04),
-                  skin=SKIN, face="mom", faces=("mom", "mom_blink", "mom_sad", "mom_sad_blink", "mom_cry", "mom_talk"), bun=True),
+                  skin=SKIN, face="mom", faces=("mom", "mom_blink", "mom_sad", "mom_sad_blink", "mom_cry", "mom_talk"), bun=True, detail=True),
     "theo_mom": dict(head=0.5, torso=(0.62, 0.32, 0.7), arm=(0.27, 0.68), leg=(0.29, 0.72), scale=0.9,
                      shirt=(0.2, 0.36, 0.3), pants=(0.2, 0.2, 0.24), shoes=(0.15, 0.1, 0.08), hair=(0.5, 0.22, 0.07),
-                     skin=SKIN, face="mom", faces=("mom", "mom_blink", "mom_sad", "mom_sad_blink", "mom_cry", "mom_talk"), bun=True),
+                     skin=SKIN, face="mom", faces=("mom", "mom_blink", "mom_sad", "mom_sad_blink", "mom_cry", "mom_talk"), bun=True, detail=True),
     "hale": dict(head=0.5, torso=(0.64, 0.34, 0.72), arm=(0.27, 0.66), leg=(0.29, 0.66), scale=0.86,
                  shirt=(0.62, 0.55, 0.72), pants=(0.62, 0.55, 0.72), shoes=(0.85, 0.7, 0.75), hair=(0.78, 0.78, 0.8),
-                 skin=(0.9, 0.78, 0.68), face="mom", faces=("mom", "mom_blink", "mom_sad", "mom_sad_blink"), bun=True, gown=True),
+                 skin=(0.9, 0.78, 0.68), face="mom", faces=("mom", "mom_blink", "mom_sad", "mom_sad_blink"), bun=True, gown=True, detail=True),
     "shade": dict(head=0.46, torso=(0.42, 0.24, 0.85), arm=(0.15, 1.75), leg=(0.18, 1.25), scale=1.05,
                   shirt=(0.02, 0.02, 0.025), pants=(0.02, 0.02, 0.025), shoes=(0.01, 0.01, 0.01), hair=None,
                   skin=(0.05, 0.05, 0.06), face="thing", gown=True),
@@ -110,6 +110,21 @@ def make(name, kind, loc, rot_z=0.0):
         sc = color(f"{name}_scarf", L["scarf"], 0.9, fabric=True)
         j["scarf"] = [box(f"{name}_scarf", (tw * 0.9, td * 1.25, 0.14), (0, 0, lh + th - 0.02), sc, 0.04, root),
                       box(f"{name}_scarf_tail", (0.13, 0.05, 0.36), (tw * 0.22, -td * 0.62, lh + th - 0.2), sc, 0.02, root)]
+    if L.get("detail"):  # richer clothes: soles, cuffs, belt, hoodie pocket + strings, fringe
+        dark = color(f"{kind}_trim", tuple(c * 0.55 for c in L["shirt"]), 0.8, fabric=True)
+        sole = color("sole", (0.92, 0.92, 0.9), 0.6)
+        for side, x in (("l", lw / 2 + 0.01), ("r", -lw / 2 - 0.01)):
+            box(f"{name}_{side}_sole", (lw * 1.12, lw * 1.4, 0.035), (x, -lw * 0.15, 0.017), sole, 0.01, j[f"{side}_hip"])
+            sx = tw / 2 + aw / 2 + 0.01
+            sx = sx if side == "l" else -sx
+            box(f"{name}_{side}_cuff", (aw * 1.06, aw * 1.06, 0.06), (sx, 0, lh + th - 0.05 - ah * 0.75 + 0.03), dark, 0.01, j[f"{side}_shoulder"])
+        box(f"{name}_belt", (tw * 1.02, td * 1.04, 0.06), (0, 0, lh + 0.03), color("belt", (0.12, 0.1, 0.09), 0.6), 0.01, root)
+        if not L.get("gown"):
+            box(f"{name}_pocket", (tw * 0.6, 0.02, th * 0.25), (0, -td / 2 - 0.01, lh + th * 0.25), dark, 0.01, root)
+            for dx in (-0.07, 0.07):
+                box(f"{name}_string{dx}", (0.022, 0.022, th * 0.32), (dx, -td / 2 - 0.015, lh + th * 0.78), color("string", (0.95, 0.95, 0.93), 0.6), 0.004, root)
+        if L["hair"]:
+            box(f"{name}_fringe", (hd * 1.04, hd * 0.12, hd * 0.13), (0, -hd / 2 - 0.02, hz + hd * 0.39), color(f"{kind}_hair", L["hair"], 0.7), 0.03, neck)
     j["neck"], j["faces"] = neck, faces
     root.scale = (s, s, s)
     root.location, root.rotation_euler = loc, (0, 0, rot_z)

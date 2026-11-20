@@ -8,6 +8,7 @@ from pathlib import Path
 
 SKILL = Path(__file__).resolve().parents[2]  # the skill folder; in a copied story set it to the absolute skill path
 sys.path.insert(0, str(SKILL / "pipeline"))
+sys.path.insert(0, str(SKILL / "engine"))  # look.post_filter
 import finish as F  # noqa: E402
 from finish import SFX  # noqa: E402
 
@@ -106,9 +107,10 @@ def video(preview=False):
             (seq / f"{n:04d}.png").symlink_to(f)
     assert n == END_F, f"{n} frames, timeline has {END_F}"
     out = HERE / ("preview.mp4" if preview else "full_video.mp4")
-    vf = "eq=contrast=1.06:saturation=1.08,unsharp=5:5:0.6," if not preview else ""
+    import look  # glow + colour grade + vignette + grain (same look in preview and final)
+    graph = look.post_filter("horror").replace("[v]", ",scale=trunc(iw/2)*2:trunc(ih/2)*2,format=yuv420p[v]")
     F.run([F.FF, "-y", "-framerate", str(FPS), "-i", seq / "%04d.png", "-i", FIN / "full_audio.wav",
-           "-filter_complex", f"[0:v]{vf}scale=trunc(iw/2)*2:trunc(ih/2)*2,format=yuv420p[v]", "-map", "[v]", "-map", "1:a",
+           "-filter_complex", graph, "-map", "[v]", "-map", "1:a",
            "-frames:v", str(n), "-c:v", "libx264", "-preset", "veryfast" if preview else "slow", "-crf", "20" if preview else "16",
            "-r", str(FPS), "-c:a", "aac", "-b:a", "192k", "-ar", str(SR), "-movflags", "+faststart", out])
     print(out, f"{n} frames, {n / FPS:.2f}s")

@@ -44,14 +44,17 @@ if __name__ == "__main__":
 Run: `blender -b -P <STORY>/partN/scene.py -- --frames 10,200`
 
 ## Shared things you MUST use (never re-invent them)
-<list the story's sets, S.char looks, faces, props, the light/state table call, weather, S.shot / S.continue_shot>
+<list the story's sets, S.char looks (each with its own hair + outfit), faces, props, the light/state table call,
+weather, the sky (`look.sky` is set in shared.py), where real trees stand, S.shot / S.continue_shot>
 
 ## Sync
 Key every visual beat ON its event frame (<list the event ids of this story>). The sound is placed centrally on the
 same frames. A speech-start frame is `p.shot(line)[2]`; words: `p.word(line, "word")`.
 
 ## Rules
-Follow `<SKILL>/references/production-rules.md` (camera, picture, sync). Test renders only, <= ~40 frames total.
+Follow `<SKILL>/references/production-rules.md` (camera, cinematic look, picture, sync, sound coverage). Act, don't
+pose: characters react, turn, gesture and walk with weight. Test renders only, <= ~40 frames total.
+List in your report every on-screen action that makes a sound but has no event.
 
 ## Gates before you report
 - `S.finish(s, p)` passes and `blender -b -P <SKILL>/engine/camcheck.py -- <STORY>/partN/scene.py <STORY>/partN`
@@ -61,7 +64,7 @@ Follow `<SKILL>/references/production-rules.md` (camera, picture, sync). Test re
 - Seconds per frame on one full-quality test frame.
 
 ## Deliver (final message, <= 200 words)
-Done or not; s/frame; camcheck result; known issues; any shared change you need.
+Done or not; s/frame; camcheck result; known issues; actions without a sound event; any shared change you need.
 
 ## Shot list (line: what we see)
 ### Part 1 (lines 1-<n>): <beat>

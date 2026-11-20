@@ -12,22 +12,25 @@ It is built for **faceless horror story channels**.
 
 No paid APIs: a local voice clone (Chatterbox), local Whisper timing, CC0 assets and ffmpeg-synthesized sound effects.
 
-> Ask Claude: *"make a 2-minute horror short about a town where every porch light must stay on"*.
-> You approve the script, the set stills and a low-res preview; it renders the rest.
+> Ask Claude: *"make a horror short about a town where every porch light must stay on"*.
+> You approve the script. Claude does everything else and hands you the finished video plus upload notes.
 
 ## Features
-- **Story to video:** writes a 1:30–2:00 twist horror script (town rule → best friend → clues → countdown → twist), then
-  produces it shot by shot.
+- **Story to video:** writes a twist horror script of up to 90 seconds (town rule or "world where X" → best friend →
+  clues → twist), then produces it shot by shot. **One approval: the script.**
+- **Cinematic look:** real photographed skies and real trees (CC0 Poly Haven), depth of field, rim light,
+  detailed clothes, and a post-grade with glow, colour grade, vignette and grain. Bright fog looks work too.
 - **Picture and sound in sync:** one timeline built from the narration's word timings. Every knock, flash or footstep is
   keyed on the frame its sound plays.
 - **Procedural 3D animation in Blender:** blocky character rigs, blinking and talking faces, walk cycles with foley,
   porch lamps, snow and rain, lightning.
 - **Cinematic camera rules enforced in code:** one eased move per shot, speed caps, a 30°/180° cut check, and no
   cameras inside props (`camcheck.py`).
-- **Multi-agent production:** three Claude sub-agents build the three parts of the video in parallel against one
-  shared base, so the parts match.
+- **Multi-agent production:** three Claude sub-agents (Sonnet) build the three parts in parallel against one shared
+  base, then an Opus reviewer checks cameras, contact sheets, sync, the twist and missing sounds before the render.
+- **Ready to upload:** the final video plus `upload.txt` (teaser title + emoji) in `Finalized_videos/<title>/`.
 - **Automatic QA:** contact sheets, plus checks for black, frozen and popping frames and loudness (-14 LUFS for YouTube).
-- **Original background music, generated in code:** a music-box horror score that follows the story beats, goes
+- **Optional original background music, generated in code:** a music-box horror score that follows the story beats, goes
   silent before the scares and hits on the twist. No copyright claims. Listen to the example:
   [`still_on_score.mp3`](skills/blocky-horror-shorts/example/still-on/still_on_score.mp3).
 - **Voice cloning from your own sample** (Chatterbox). No voice audio is shipped.
@@ -63,8 +66,8 @@ Or copy just the skill: `cp -r skills/blocky-horror-shorts ~/.claude/skills/`
 - Assets (~530 MB, CC0 from Poly Haven, downloaded once): `python3 skills/blocky-horror-shorts/engine/assets.py`
 - A 10–20 s wav of a narrator voice **you own or have permission to clone**
 
-Render time: EEVEE at 1440×2560 and 32 samples runs about 2.3 s per frame on an Apple M1 Max, so a 2-minute video
-takes roughly 2.5 hours. `--preview` renders fast low-res checks.
+Render time: EEVEE at 1440×2560 with the cinematic look runs about 2–3 s per frame on an Apple M1 Max (a street
+of real trees about 7 s), so a 90-second video takes roughly 2–3 hours. `--preview` renders fast low-res checks.
 
 ## Example: "Still On"
 `skills/blocky-horror-shorts/example/still-on/` holds a complete 1:56 story: the script, timeline, shared set and cast,
